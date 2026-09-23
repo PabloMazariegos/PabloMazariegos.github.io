@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pablo Mazariegos · Tech Lead, LLM Systems</title>
+<meta name="description" content="Tech Lead building LLM systems in production and AI-native engineering platforms. Guatemala, remote.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #09090b; --bg2: #0f0f12; --fg: #f4f4f5; --muted: #a1a1aa; --dim: #6b6b76;
+    --line: #232329; --line2: #2f2f37;
+    --g1: #ff318c; --g2: #fc801d; --g3: #7b61ff;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--fg);
+         font: 16px/1.6 "Inter Tight", system-ui, sans-serif;
+         -webkit-font-smoothing: antialiased; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  a { color: inherit; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 28px; border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
+  .mono { font-family: var(--mono); }
+  .label { font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
+  .grad { background: linear-gradient(90deg, var(--g1), var(--g2) 55%, var(--g3));
+          -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  nav { position: sticky; top: 0; z-index: 10; background: rgba(9,9,11,.8); backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--line); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  nav .brand { font: 500 14px var(--mono); text-decoration: none; }
+  nav .brand b { color: var(--g2); font-weight: 500; }
+  nav ul { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; font-size: 14px; }
+  nav ul a { text-decoration: none; color: var(--muted); }
+  nav ul a:hover { color: var(--fg); }
+
+  .hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
+  .hero::before { content: ""; position: absolute; inset: 0;
+    background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 56px 56px; -webkit-mask-image: radial-gradient(ellipse 70% 80% at 70% 0%, #000 20%, transparent 75%);
+    mask-image: radial-gradient(ellipse 70% 80% at 70% 0%, #000 20%, transparent 75%); opacity: .7; }
+  .hero::after { content: ""; position: absolute; width: 620px; height: 620px; right: -140px; top: -260px;
+    background: radial-gradient(circle, rgba(255,49,140,.35), rgba(252,128,29,.18) 40%, rgba(123,97,255,.12) 60%, transparent 70%);
+    filter: blur(20px); }
+  .hero .wrap { position: relative; z-index: 1; padding-top: 96px; padding-bottom: 88px; }
+  .status { display: inline-flex; align-items: center; gap: 10px; border: 1px solid var(--line2); border-radius: 999px;
+            padding: 6px 14px; font: 12px var(--mono); color: var(--muted); background: rgba(15,15,18,.7); }
+  .status i { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 4px rgba(34,197,94,.15); }
+  h1 { font-size: clamp(40px, 6.4vw, 76px); line-height: 1.02; letter-spacing: -.035em; font-weight: 700; margin: 28px 0 24px; max-width: 16ch; }
+  .lede { font-size: 19px; color: var(--muted); max-width: 60ch; margin: 0 0 36px; }
+  .lede b { color: var(--fg); font-weight: 500; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 20px; border-radius: 8px;
+         font-weight: 600; font-size: 15px; text-decoration: none; border: 1px solid var(--line2); }
+  .btn.primary { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+  .btn:hover { border-color: var(--muted); }
+
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--line); }
+  .stats > div { padding: 28px; border-right: 1px solid var(--line); }
+  .stats > div:last-child { border-right: 0; }
+  .stats b { display: block; font: 500 34px/1.1 var(--mono); letter-spacing: -.03em; margin-bottom: 8px; }
+  .stats span { color: var(--muted); font-size: 14px; }
+
+  section { border-bottom: 1px solid var(--line); }
+  .sec-head { display: flex; align-items: baseline; gap: 18px; padding: 72px 0 40px; }
+  .sec-head h2 { font-size: 40px; letter-spacing: -.03em; line-height: 1.1; margin: 0; font-weight: 700; }
+  .sec-head .label { color: var(--g2); }
+
+  .case { display: grid; grid-template-columns: 280px 1fr; gap: 48px; padding: 48px 0; border-top: 1px solid var(--line); }
+  .case aside .num { font: 500 13px var(--mono); color: var(--dim); }
+  .case aside h3 { font-size: 26px; line-height: 1.15; letter-spacing: -.02em; margin: 12px 0 16px; font-weight: 700; }
+  .case aside .role { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chips span { font: 12px var(--mono); color: var(--muted); border: 1px solid var(--line2); border-radius: 6px; padding: 3px 8px; }
+  .case .body p { margin: 0 0 16px; color: #d4d4d8; }
+  .case .body h4 { font: 500 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--dim); margin: 26px 0 8px; }
+  .case .body h4:first-child { margin-top: 0; }
+  .metric { display: flex; gap: 32px; flex-wrap: wrap; margin: 24px 0 8px; padding: 20px 22px; border: 1px solid var(--line2);
+            border-radius: 12px; background: linear-gradient(180deg, var(--bg2), var(--bg)); }
+  .metric b { display: block; font: 500 28px/1.1 var(--mono); letter-spacing: -.02em; }
+  .metric span { color: var(--muted); font-size: 13px; }
+  .note { font: 12px var(--mono); color: var(--dim); }
+  .diagram { margin: 24px 0 8px; padding: 20px; border: 1px solid var(--line2); border-radius: 12px; background: var(--bg2); overflow-x: auto; }
+  .diagram svg { display: block; width: 100%; min-width: 620px; height: auto; }
+  .diagram svg text { font-family: var(--mono); font-size: 12px; fill: var(--fg); }
+  .diagram svg .sub { fill: var(--dim); font-size: 10.5px; }
+  .diagram svg rect { fill: #141418; stroke: var(--line2); }
+  .diagram svg rect.hot { stroke: url(#gstroke); stroke-width: 1.5; }
+  .diagram svg path { stroke: var(--dim); fill: none; stroke-width: 1.2; }
+  .diagram .cap { font: 11px var(--mono); color: var(--dim); margin-top: 12px; }
+
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); margin-bottom: 72px; }
+  .grid3 > div { padding: 28px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .grid3 .label { color: var(--g2); }
+  .grid3 h3 { font-size: 19px; margin: 14px 0 8px; letter-spacing: -.01em; }
+  .grid3 p { margin: 0; color: var(--muted); font-size: 15px; }
+
+  .stack { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); margin-bottom: 72px; }
+  .stack > div { padding: 24px 24px 24px 0; }
+  .stack h3 { font: 500 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--dim); margin: 0 0 12px; }
+  .stack p { margin: 0; font: 14px/1.9 var(--mono); color: #d4d4d8; }
+
+  .side { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 72px; }
+  .side a, .side .card { display: block; padding: 24px; border: 1px solid var(--line2); border-radius: 12px; text-decoration: none; background: var(--bg2); }
+  .side a:hover { border-color: var(--muted); }
+  .side h3 { margin: 10px 0 6px; font-size: 20px; letter-spacing: -.01em; }
+  .side p { margin: 0; color: var(--muted); font-size: 15px; }
+
+  footer .wrap { padding-top: 96px; padding-bottom: 64px; }
+  footer h2 { font-size: clamp(36px, 5vw, 60px); letter-spacing: -.035em; line-height: 1.05; margin: 20px 0 28px; }
+  footer .small { margin-top: 64px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; color: var(--dim); font: 12px var(--mono); }
+
+  @media (max-width: 860px) {
+    nav ul { display: none; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stats > div:nth-child(2) { border-right: 0; }
+    .stats > div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+    .case { grid-template-columns: 1fr; gap: 20px; }
+    .grid3, .stack, .side { grid-template-columns: 1fr; }
+    .wrap { padding: 0 18px; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gstroke" x1="0" x2="1"><stop offset="0" stop-color="#ff318c"/><stop offset=".55" stop-color="#fc801d"/><stop offset="1" stop-color="#7b61ff"/></linearGradient>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#6b6b76"/></marker>
+  </defs>
+</svg>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#">pablo<b>.</b>mazariegos</a>
+    <ul>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#principles">Principles</a></li>
+      <li><a href="#stack">Stack</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="status"><i></i>Open to remote roles · Guatemala · GMT-6</span>
+    <h1>I build LLM systems that <span class="grad">run in production.</span></h1>
+    <p class="lede">
+      <b>Tech Lead at a healthtech company</b> serving insurers and hospitals across Latin America.
+      I design the AI that classifies, extracts, and validates medical documents, and I built the
+      <b>AI-native development platform</b> my engineering team ships with. Java/Spring Boot, Python/FastAPI,
+      Vue, serverless AWS.
+    </p>
+    <div class="cta">
+      <a class="btn primary" href="mailto:pmazariegospinto@gmail.com">Get in touch</a>
+      <a class="btn" href="https://linkedin.com/in/pmazariegospinto">LinkedIn</a>
+      <a class="btn" href="https://github.com/PabloMazariegos">GitHub</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap" style="padding:0">
+  <div class="stats">
+    <div><b>7+ yrs</b><span>software engineering, 5+ in healthtech</span></div>
+    <div><b>48k+</b><span>LLM document validations in production</span></div>
+    <div><b>22</b><span>repositories built from scratch</span></div>
+    <div><b>250+</b><span>RFCs, specs, runbooks and postmortems</span></div>
+  </div>
+</div>
+
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head"><span class="label">01 / Work</span><h2>Selected work</h2></div>
+
+    <article class="case">
+      <aside>
+        <div class="num">01</div>
+        <h3>Document Validation Service</h3>
+        <div class="role">Healthtech · 2026 · Designed and built it; tech lead of the team that runs it</div>
+        <div class="chips"><span>AWS Lambda</span><span>SQS</span><span>API Gateway</span><span>PostgreSQL</span><span>DynamoDB</span><span>LLMs</span></div>
+      </aside>
+      <div class="body">
+        <h4>Problem</h4>
+        <p>Insurers and hospitals send claim forms and authorization documents that must be checked: document type,
+          signature, stamp, consistency between fields. The rules change by country, document type, and contract.
+          The service replaced a legacy validation flow.</p>
+        <h4>What I built</h4>
+        <p>An event-driven serverless service. An LLM classifies each document and extracts its fields, then a rules
+          engine configurable per country, document type, and contract validates them. To switch over safely, I ran the
+          legacy system and the new service on the same real production cases and compared the results case by case.</p>
+        <div class="diagram">
+          <svg viewBox="0 0 760 170" role="img" aria-label="Document Validation Service architecture">
+            <rect x="0" y="55" width="110" height="56" rx="8"/><text x="55" y="80" text-anchor="middle">API Gateway</text><text class="sub" x="55" y="97" text-anchor="middle">ingestion</text>
+            <rect x="150" y="55" width="100" height="56" rx="8"/><text x="200" y="80" text-anchor="middle">SQS</text><text class="sub" x="200" y="97" text-anchor="middle">async queue</text>
+            <rect class="hot" x="290" y="55" width="140" height="56" rx="8"/><text x="360" y="80" text-anchor="middle">Orchestrator</text><text class="sub" x="360" y="97" text-anchor="middle">Lambda</text>
+            <rect class="hot" x="480" y="4" width="150" height="56" rx="8"/><text x="555" y="29" text-anchor="middle">LLM</text><text class="sub" x="555" y="46" text-anchor="middle">classify + extract</text>
+            <rect class="hot" x="480" y="106" width="150" height="56" rx="8"/><text x="555" y="131" text-anchor="middle">Rules engine</text><text class="sub" x="555" y="148" text-anchor="middle">country · doc · contract</text>
+            <rect x="660" y="55" width="100" height="56" rx="8"/><text x="710" y="80" text-anchor="middle">Postgres</text><text class="sub" x="710" y="97" text-anchor="middle">+ DynamoDB</text>
+            <path d="M110 83 H148" marker-end="url(#arr)"/><path d="M250 83 H288" marker-end="url(#arr)"/>
+            <path d="M430 76 C455 76 455 32 478 32" marker-end="url(#arr)"/><path d="M430 90 C455 90 455 134 478 134" marker-end="url(#arr)"/>
+            <path d="M555 60 V104" marker-end="url(#arr)"/><path d="M630 134 C645 134 645 90 658 90" marker-end="url(#arr)"/>
+          </svg>
+          <div class="cap">fig. 1 · simplified request path</div>
+        </div>
+        <div class="metric">
+          <div><b>~48,000</b><span>validation requests</span></div>
+          <div><b>~518,000</b><span>rule evaluations</span></div>
+          <div><b>~2,000</b><span>pages per day</span></div>
+        </div>
+        <p class="note">In production as of July 2026 · clients in Brazil and Colombia</p>
+      </div>
+    </article>
+
+    <article class="case">
+      <aside>
+        <div class="num">02</div>
+        <h3>Medical Pre-Audit with AI</h3>
+        <div class="role">Healthtech · 2026 · Author of the RFC, tech lead of the project</div>
+        <div class="chips"><span>Claude</span><span>Gemini</span><span>Fallback</span><span>Prompt versioning</span><span>Few-shot</span><span>SSO</span></div>
+      </aside>
+      <div class="body">
+        <h4>Problem</h4>
+        <p>Auditing a hospital bill means reading the clinical record and the invoice side by side. The business goal
+          is to bring a 2–4 hour audit under 2 hours.</p>
+        <h4>What I designed</h4>
+        <p>A system that cross-checks the clinical record against the invoice and raises alerts in six categories:
+          under- and over-billing, duplicates, charges outside the stay, clinical inference, and clinical guidelines.
+          Results are cached by SHA-256 hash, prompts are versioned in the database, token cost is tracked per request
+          from day one, and structured feedback from auditors feeds curated few-shot examples.</p>
+        <div class="diagram">
+          <svg viewBox="0 0 760 150" role="img" aria-label="Pre-audit architecture">
+            <rect x="0" y="46" width="150" height="56" rx="8"/><text x="75" y="71" text-anchor="middle">Clinical record</text><text class="sub" x="75" y="88" text-anchor="middle">+ hospital invoice</text>
+            <rect x="190" y="46" width="120" height="56" rx="8"/><text x="250" y="71" text-anchor="middle">Cache</text><text class="sub" x="250" y="88" text-anchor="middle">SHA-256</text>
+            <rect class="hot" x="360" y="4" width="130" height="50" rx="8"/><text x="425" y="26" text-anchor="middle">Claude</text><text class="sub" x="425" y="42" text-anchor="middle">parallel</text>
+            <rect class="hot" x="360" y="96" width="130" height="50" rx="8"/><text x="425" y="118" text-anchor="middle">Gemini</text><text class="sub" x="425" y="134" text-anchor="middle">parallel</text>
+            <rect x="540" y="46" width="100" height="56" rx="8"/><text x="590" y="71" text-anchor="middle">Merge</text><text class="sub" x="590" y="88" text-anchor="middle">+ fallback</text>
+            <rect x="670" y="46" width="90" height="56" rx="8"/><text x="715" y="71" text-anchor="middle">Alerts</text><text class="sub" x="715" y="88" text-anchor="middle">6 types</text>
+            <path d="M150 74 H188" marker-end="url(#arr)"/><path d="M310 68 C335 68 335 29 358 29" marker-end="url(#arr)"/><path d="M310 80 C335 80 335 121 358 121" marker-end="url(#arr)"/>
+            <path d="M490 29 C515 29 515 68 538 68" marker-end="url(#arr)"/><path d="M490 121 C515 121 515 80 538 80" marker-end="url(#arr)"/><path d="M640 74 H668" marker-end="url(#arr)"/>
+          </svg>
+          <div class="cap">fig. 2 · two providers in parallel, automatic fallback</div>
+        </div>
+        <h4>A decision I'm glad I made</h4>
+        <p>I dropped a planned OCR layer. It added indirection without adding value, and one more thing to break.</p>
+      </div>
+    </article>
+
+    <article class="case">
+      <aside>
+        <div class="num">03</div>
+        <h3>Running LLMs like production infrastructure</h3>
+        <div class="role">Healthtech · 2026 · Incident lead and owner of LLM cost tracking</div>
+        <div class="chips"><span>Incident response</span><span>Postmortems</span><span>LLM FinOps</span></div>
+      </aside>
+      <div class="body">
+        <h4>The incident</h4>
+        <p>Our main LLM provider stopped responding from the production VPC. Within hours I moved the document processors
+          to another provider with a rollback path ready, then stabilized and migrated back to a newer model. I wrote the
+          postmortem and a side-by-side evidence report of both providers in production.</p>
+        <h4>The cost ledger</h4>
+        <p>I built a per-request ledger of LLM usage and cost, with pricing that has effective dates, and a tool that
+          computes the real cost of extraction (LLM plus Lambda) per processor and environment. It surfaced a pricing
+          error that had been understating what we really paid.</p>
+        <div class="metric">
+          <div><b class="grad">~2.8×</b><span>real cost vs. recorded cost,<br>found by the ledger</span></div>
+          <div><b>hours</b><span>to move production to another<br>provider, with rollback ready</span></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="case">
+      <aside>
+        <div class="num">04</div>
+        <h3>An AI-native development platform</h3>
+        <div class="role">Healthtech · 2026 · Creator and main author, adopted by the engineering team</div>
+        <div class="chips"><span>Claude Code</span><span>MCP</span><span>Multi-agent</span><span>Python</span><span>Playwright</span><span>ECS</span></div>
+      </aside>
+      <div class="body">
+        <h4>What it is</h4>
+        <p>An internal Claude Code marketplace. Its core plugin is a spec-driven workflow for the whole cycle: product
+          requirements become Jira tickets, then grooming, a technical spec, a plan with a dependency graph,
+          implementation, tests, parallel code review per language, a QA package, and closing the ticket.
+          About 20 specialized subagents, and every step has a gate tied to evidence.</p>
+        <div class="metric">
+          <div><b>14</b><span>plugins</span></div>
+          <div><b>326</b><span>commits</span></div>
+          <div><b>6+</b><span>contributors</span></div>
+          <div><b>167</b><span>E2E tests on ECS</span></div>
+        </div>
+        <h4>Guardrails by construction</h4>
+        <p>The tools make the dangerous action impossible instead of asking people to be careful. The PostgreSQL MCP
+          server uses short-lived IAM tokens and blocks writes in production, the log tool is read-only by design, and
+          the configuration tools refuse to write to production.</p>
+        <h4>Testing</h4>
+        <p>I also built the team's end-to-end suite in Playwright and TypeScript, across three domains, running on ECS and
+          publishing reports automatically. Its first run found real backend bugs.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="principles">
+  <div class="wrap">
+    <div class="sec-head"><span class="label">02 / Principles</span><h2>How I work</h2></div>
+    <div class="grid3">
+      <div><span class="label">01</span><h3>Simple first</h3><p>I remove layers before I add them. Fewer moving parts, derived state over stored state.</p></div>
+      <div><span class="label">02</span><h3>Guardrails in the tool</h3><p>If an action is dangerous in production, the tool should not allow it. Process is the backup, not the plan.</p></div>
+      <div><span class="label">03</span><h3>LLMs are infrastructure</h3><p>Fallbacks, cost tracking, versioned prompts, incident response and postmortems, like any other dependency.</p></div>
+      <div><span class="label">04</span><h3>AI in the process</h3><p>Not only in the code: requirements, tickets, specs, QA packages and release plans.</p></div>
+      <div><span class="label">05</span><h3>Lead without leaving the code</h3><p>I plan capacity, run sprints and releases, and still design and build.</p></div>
+      <div><span class="label">06</span><h3>Write it down</h3><p>RFCs before building, specs before coding, postmortems after incidents.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="wrap">
+    <div class="sec-head"><span class="label">03 / Stack</span><h2>What I work with</h2></div>
+    <div class="stack">
+      <div><h3>Backend</h3><p>Java 17 · Spring Boot · Spring Batch<br>Spring Cloud · JPA/Hibernate<br>Python · FastAPI · SQLAlchemy<br>Event-driven · DDD</p></div>
+      <div><h3>Applied AI</h3><p>Claude · Gemini · OpenAI<br>LangGraph · LangChain · Langfuse<br>Structured extraction · pgvector<br>Multi-provider fallback</p></div>
+      <div><h3>AWS</h3><p>Lambda · SQS · SNS · S3<br>API Gateway · ECS Fargate<br>RDS · DynamoDB · SSM<br>Serverless · SAM · Docker</p></div>
+      <div><h3>AI-native engineering</h3><p>Claude Code plugins · subagents<br>MCP servers · hooks<br>Multi-agent workflows</p></div>
+      <div><h3>Frontend</h3><p>Vue 3 · Nuxt · TypeScript<br>PrimeVue · Tailwind · Vitest</p></div>
+      <div><h3>Quality</h3><p>pytest · Playwright · TDD<br>Parity testing · Postmortems</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="label">04 / Side projects</span><h2>Outside work</h2></div>
+    <div class="side">
+      <a href="https://finanzapp.pblpnt.com"><span class="label">Personal · Live ↗</span><h3>FinanzApp</h3><p>A personal finance app I designed, built and run. Nuxt 4 and Supabase.</p></a>
+      <div class="card"><span class="label">Freelance · 2025</span><h3>FIT System</h3><p>Frontend lead and architect for a Ministry of Economy of Guatemala innovation fund. Vue 3, TypeScript, PrimeVue.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <span class="label" style="color:var(--g2)">05 / Contact</span>
+    <h2>Building something with LLMs?<br><span class="grad">Let's talk.</span></h2>
+    <div class="cta">
+      <a class="btn primary" href="mailto:pmazariegospinto@gmail.com">pmazariegospinto@gmail.com</a>
+    </div>
+    <div class="small"><span>Pablo Mazariegos · Guatemala · GMT-6</span><span>Spanish (native) · English (professional)</span></div>
+  </div>
+</footer>
+
+</body>
+</html>
