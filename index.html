@@ -112,6 +112,20 @@
   footer h2 { font-size: clamp(36px, 5vw, 60px); letter-spacing: -.035em; line-height: 1.05; margin: 20px 0 28px; }
   footer .small { margin-top: 64px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; color: var(--dim); font: 12px var(--mono); }
 
+
+  .xp { border-top: 1px solid var(--line); margin-bottom: 72px; }
+  .xp-row { display: grid; grid-template-columns: 280px 1fr; gap: 48px; padding: 36px 0; border-bottom: 1px solid var(--line); }
+  .xp-row .when { font: 500 13px var(--mono); color: var(--dim); }
+  .xp-row .org { font-size: 22px; font-weight: 700; letter-spacing: -.02em; margin: 8px 0 4px; }
+  .xp-row .where { color: var(--muted); font-size: 14px; }
+  .xp-role { margin-bottom: 22px; }
+  .xp-role:last-child { margin-bottom: 0; }
+  .xp-role h3 { font-size: 18px; margin: 0 0 2px; }
+  .xp-role .dates { font: 12px var(--mono); color: var(--g2); margin-bottom: 10px; }
+  .xp-role ul { margin: 0; padding-left: 18px; color: #d4d4d8; }
+  .xp-role li { margin-bottom: 6px; }
+  .lang { font: 500 13px var(--mono); border: 1px solid var(--line2); border-radius: 6px; padding: 4px 9px; text-decoration: none; color: var(--fg) !important; }
+  @media (max-width: 860px) { .xp-row { grid-template-columns: 1fr; gap: 16px; } }
   @media (max-width: 860px) {
     nav ul { display: none; }
     .stats { grid-template-columns: repeat(2, 1fr); }
@@ -136,10 +150,12 @@
   <div class="wrap">
     <a class="brand" href="#">pablo<b>.</b>mazariegos</a>
     <ul>
+      <li><a href="#experience">Experience</a></li>
       <li><a href="#work">Work</a></li>
-      <li><a href="#principles">Principles</a></li>
       <li><a href="#stack">Stack</a></li>
+      <li><a href="cv-en.pdf" download>CV</a></li>
       <li><a href="#contact">Contact</a></li>
+      <li><a class="lang" href="es/" hreflang="es">ES</a></li>
     </ul>
   </div>
 </nav>
@@ -154,7 +170,8 @@
       My edge: <b>LLM systems in production</b> and the <b>AI-native development platform</b> my team ships with.
     </p>
     <div class="cta">
-      <a class="btn primary" href="mailto:pmazariegospinto@gmail.com">Get in touch</a>
+      <a class="btn primary" href="cv-en.pdf" download>Download CV (PDF) ↓</a>
+      <a class="btn" href="mailto:pmazariegospinto@gmail.com">Get in touch</a>
       <a class="btn" href="https://linkedin.com/in/pmazariegospinto">LinkedIn</a>
       <a class="btn" href="https://github.com/PabloMazariegos">GitHub</a>
     </div>
@@ -170,9 +187,52 @@
   </div>
 </div>
 
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head"><span class="label">01 / Experience</span><h2>Where I've worked</h2></div>
+    <div class="xp">
+      <div class="xp-row">
+        <div><div class="when">Jul 2021 – Present</div><div class="org">Healthtech company</div><div class="where">Insurers and healthcare providers · 5 countries in Latin America · Remote</div></div>
+        <div>
+          <div class="xp-role"><h3>Tech Lead, Audit and Authorization</h3><div class="dates">Jan 2026 – Present</div>
+            <ul>
+              <li>Lead the team (developers, QA, product owner): sprints, capacity, backlog, releases and production incidents, while still designing and coding.</li>
+              <li>Designed the Document Validation Service: LLM classification and extraction plus a configurable rules engine, 48,000+ validations in production.</li>
+              <li>Architected Medical Pre-Audit with AI: Claude and Gemini in parallel with fallback and per-token cost tracking.</li>
+              <li>Created the internal Claude Code platform the team adopted: 14 plugins, MCP servers and a multi-agent workflow from ticket to reviewed code.</li>
+              <li>Built the team's E2E framework: 167 Playwright and TypeScript tests running on ECS.</li>
+            </ul></div>
+          <div class="xp-role"><h3>Full Stack Software Engineer I–III</h3><div class="dates">Jul 2021 – Dec 2025</div>
+            <ul>
+              <li>Java and Spring Boot microservices: authorizations, reimbursements, health records, catalogs, plans, eligibility and settlements.</li>
+              <li>REST, SOAP and XML integrations with insurers in Guatemala, the Dominican Republic, Colombia and Mexico.</li>
+              <li>AI document extraction pipeline (FastAPI on Lambda) on OpenAI, Anthropic and Gemini; medical eligibility agents with LangGraph on ECS Fargate.</li>
+              <li>Vue.js frontends for providers, authorizations and e-prescription, including the launches in Argentina and Brazil.</li>
+            </ul></div>
+        </div>
+      </div>
+      <div class="xp-row">
+        <div><div class="when">Jan 2019 – Jul 2021</div><div class="org">G&amp;T Continental Bank</div><div class="where">Banking · Guatemala</div></div>
+        <div><div class="xp-role"><h3>Software Developer</h3><div class="dates">Jan 2019 – Jul 2021</div>
+          <ul>
+            <li>Backend development in C++, SQL Server and MongoDB for corporate banking.</li>
+            <li>Built a broker that exposes internal communications as REST APIs.</li>
+          </ul></div></div>
+      </div>
+      <div class="xp-row">
+        <div><div class="when">2015 – Present</div><div class="org">Education</div><div class="where">Universidad Mariano Gálvez de Guatemala</div></div>
+        <div>
+          <div class="xp-role"><h3>Master's in Information Security</h3><div class="dates">In progress</div></div>
+          <div class="xp-role"><h3>B.S. in Systems Engineering</h3><div class="dates">2015 – 2020</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="work">
   <div class="wrap">
-    <div class="sec-head"><span class="label">01 / Work</span><h2>Selected work</h2></div>
+    <div class="sec-head"><span class="label">02 / Work</span><h2>Selected work</h2></div>
 
     <article class="case">
       <aside>
@@ -329,7 +389,7 @@
 
 <section id="principles">
   <div class="wrap">
-    <div class="sec-head"><span class="label">02 / Principles</span><h2>How I work</h2></div>
+    <div class="sec-head"><span class="label">03 / Principles</span><h2>How I work</h2></div>
     <div class="grid3">
       <div><span class="label">01</span><h3>Simple first</h3><p>I remove layers before I add them. Fewer moving parts, derived state over stored state.</p></div>
       <div><span class="label">02</span><h3>Guardrails in the tool</h3><p>If an action is dangerous in production, the tool should not allow it. Process is the backup, not the plan.</p></div>
@@ -343,7 +403,7 @@
 
 <section id="stack">
   <div class="wrap">
-    <div class="sec-head"><span class="label">03 / Stack</span><h2>What I work with</h2></div>
+    <div class="sec-head"><span class="label">04 / Stack</span><h2>What I work with</h2></div>
     <div class="stack">
       <div><h3>Backend</h3><p>Java 17 · Spring Boot · Spring Batch<br>Spring Cloud · JPA/Hibernate<br>Python · FastAPI · SQLAlchemy<br>Event-driven · DDD</p></div>
       <div><h3>Applied AI</h3><p>Claude · Gemini · OpenAI<br>LangGraph · LangChain · Langfuse<br>Structured extraction · pgvector<br>Multi-provider fallback</p></div>
@@ -357,7 +417,7 @@
 
 <section>
   <div class="wrap">
-    <div class="sec-head"><span class="label">04 / Side projects</span><h2>Outside work</h2></div>
+    <div class="sec-head"><span class="label">05 / Side projects</span><h2>Outside work</h2></div>
     <div class="side">
       <a href="https://finanzapp.pblpnt.com"><span class="label">Personal · Live ↗</span><h3>FinanzApp</h3><p>A personal finance app I designed, built and run. Nuxt 4 and Supabase.</p></a>
       <div class="card"><span class="label">Freelance · 2025</span><h3>FIT System</h3><p>Frontend lead and architect for a Ministry of Economy of Guatemala innovation fund. Vue 3, TypeScript, PrimeVue.</p></div>
@@ -367,10 +427,11 @@
 
 <footer id="contact">
   <div class="wrap">
-    <span class="label" style="color:var(--g2)">05 / Contact</span>
+    <span class="label" style="color:var(--g2)">06 / Contact</span>
     <h2>Need someone who builds and leads?<br><span class="grad">Let's talk.</span></h2>
     <div class="cta">
       <a class="btn primary" href="mailto:pmazariegospinto@gmail.com">pmazariegospinto@gmail.com</a>
+      <a class="btn" href="cv-en.pdf" download>Download CV (PDF) ↓</a>
     </div>
     <div class="small"><span>Pablo Mazariegos · Guatemala · GMT-6</span><span>Spanish (native) · English (professional)</span></div>
   </div>

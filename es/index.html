@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pablo Mazariegos · Tech Lead, Backend &amp; Full Stack</title>
+<meta name="description" content="Tech Lead e ingeniero full stack: sistemas backend, integraciones y sistemas LLM en producción. Guatemala, remoto.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #09090b; --bg2: #0f0f12; --fg: #f4f4f5; --muted: #a1a1aa; --dim: #6b6b76;
+    --line: #232329; --line2: #2f2f37;
+    --g1: #ff318c; --g2: #fc801d; --g3: #7b61ff;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--fg);
+         font: 16px/1.6 "Inter Tight", system-ui, sans-serif;
+         -webkit-font-smoothing: antialiased; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  a { color: inherit; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 28px; border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
+  .mono { font-family: var(--mono); }
+  .label { font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
+  .grad { background: linear-gradient(90deg, var(--g1), var(--g2) 55%, var(--g3));
+          -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  nav { position: sticky; top: 0; z-index: 10; background: rgba(9,9,11,.8); backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--line); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  nav .brand { font: 500 14px var(--mono); text-decoration: none; }
+  nav .brand b { color: var(--g2); font-weight: 500; }
+  nav ul { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; font-size: 14px; }
+  nav ul a { text-decoration: none; color: var(--muted); }
+  nav ul a:hover { color: var(--fg); }
+
+  .hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
+  .hero::before { content: ""; position: absolute; inset: 0;
+    background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 56px 56px; -webkit-mask-image: radial-gradient(ellipse 70% 80% at 70% 0%, #000 20%, transparent 75%);
+    mask-image: radial-gradient(ellipse 70% 80% at 70% 0%, #000 20%, transparent 75%); opacity: .7; }
+  .hero::after { content: ""; position: absolute; width: 620px; height: 620px; right: -140px; top: -260px;
+    background: radial-gradient(circle, rgba(255,49,140,.35), rgba(252,128,29,.18) 40%, rgba(123,97,255,.12) 60%, transparent 70%);
+    filter: blur(20px); }
+  .hero .wrap { position: relative; z-index: 1; padding-top: 96px; padding-bottom: 88px; }
+  .status { display: inline-flex; align-items: center; gap: 10px; border: 1px solid var(--line2); border-radius: 999px;
+            padding: 6px 14px; font: 12px var(--mono); color: var(--muted); background: rgba(15,15,18,.7); }
+  .status i { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 4px rgba(34,197,94,.15); }
+  h1 { font-size: clamp(40px, 6.4vw, 76px); line-height: 1.02; letter-spacing: -.035em; font-weight: 700; margin: 28px 0 24px; max-width: 16ch; }
+  .lede { font-size: 19px; color: var(--muted); max-width: 60ch; margin: 0 0 36px; }
+  .lede b { color: var(--fg); font-weight: 500; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 20px; border-radius: 8px;
+         font-weight: 600; font-size: 15px; text-decoration: none; border: 1px solid var(--line2); }
+  .btn.primary { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+  .btn:hover { border-color: var(--muted); }
+
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--line); }
+  .stats > div { padding: 28px; border-right: 1px solid var(--line); }
+  .stats > div:last-child { border-right: 0; }
+  .stats b { display: block; font: 500 34px/1.1 var(--mono); letter-spacing: -.03em; margin-bottom: 8px; }
+  .stats span { color: var(--muted); font-size: 14px; }
+
+  section { border-bottom: 1px solid var(--line); }
+  .sec-head { display: flex; align-items: baseline; gap: 18px; padding: 72px 0 40px; }
+  .sec-head h2 { font-size: 40px; letter-spacing: -.03em; line-height: 1.1; margin: 0; font-weight: 700; }
+  .sec-head .label { color: var(--g2); }
+
+  .case { display: grid; grid-template-columns: 280px 1fr; gap: 48px; padding: 48px 0; border-top: 1px solid var(--line); }
+  .case aside .num { font: 500 13px var(--mono); color: var(--dim); }
+  .case aside h3 { font-size: 26px; line-height: 1.15; letter-spacing: -.02em; margin: 12px 0 16px; font-weight: 700; }
+  .case aside .role { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chips span { font: 12px var(--mono); color: var(--muted); border: 1px solid var(--line2); border-radius: 6px; padding: 3px 8px; }
+  .case .body p { margin: 0 0 16px; color: #d4d4d8; }
+  .case .body h4 { font: 500 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--dim); margin: 26px 0 8px; }
+  .case .body h4:first-child { margin-top: 0; }
+  .metric { display: flex; gap: 32px; flex-wrap: wrap; margin: 24px 0 8px; padding: 20px 22px; border: 1px solid var(--line2);
+            border-radius: 12px; background: linear-gradient(180deg, var(--bg2), var(--bg)); }
+  .metric b { display: block; font: 500 28px/1.1 var(--mono); letter-spacing: -.02em; }
+  .metric span { color: var(--muted); font-size: 13px; }
+  .note { font: 12px var(--mono); color: var(--dim); }
+  .diagram { margin: 24px 0 8px; padding: 20px; border: 1px solid var(--line2); border-radius: 12px; background: var(--bg2); overflow-x: auto; }
+  .diagram svg { display: block; width: 100%; min-width: 620px; height: auto; }
+  .diagram svg text { font-family: var(--mono); font-size: 12px; fill: var(--fg); }
+  .diagram svg .sub { fill: var(--dim); font-size: 10.5px; }
+  .diagram svg rect { fill: #141418; stroke: var(--line2); }
+  .diagram svg rect.hot { stroke: url(#gstroke); stroke-width: 1.5; }
+  .diagram svg path { stroke: var(--dim); fill: none; stroke-width: 1.2; }
+  .diagram .cap { font: 11px var(--mono); color: var(--dim); margin-top: 12px; }
+
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); margin-bottom: 72px; }
+  .grid3 > div { padding: 28px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .grid3 .label { color: var(--g2); }
+  .grid3 h3 { font-size: 19px; margin: 14px 0 8px; letter-spacing: -.01em; }
+  .grid3 p { margin: 0; color: var(--muted); font-size: 15px; }
+
+  .stack { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); margin-bottom: 72px; }
+  .stack > div { padding: 24px 24px 24px 0; }
+  .stack h3 { font: 500 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--dim); margin: 0 0 12px; }
+  .stack p { margin: 0; font: 14px/1.9 var(--mono); color: #d4d4d8; }
+
+  .side { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 72px; }
+  .side a, .side .card { display: block; padding: 24px; border: 1px solid var(--line2); border-radius: 12px; text-decoration: none; background: var(--bg2); }
+  .side a:hover { border-color: var(--muted); }
+  .side h3 { margin: 10px 0 6px; font-size: 20px; letter-spacing: -.01em; }
+  .side p { margin: 0; color: var(--muted); font-size: 15px; }
+
+  footer .wrap { padding-top: 96px; padding-bottom: 64px; }
+  footer h2 { font-size: clamp(36px, 5vw, 60px); letter-spacing: -.035em; line-height: 1.05; margin: 20px 0 28px; }
+  footer .small { margin-top: 64px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; color: var(--dim); font: 12px var(--mono); }
+
+
+  .xp { border-top: 1px solid var(--line); margin-bottom: 72px; }
+  .xp-row { display: grid; grid-template-columns: 280px 1fr; gap: 48px; padding: 36px 0; border-bottom: 1px solid var(--line); }
+  .xp-row .when { font: 500 13px var(--mono); color: var(--dim); }
+  .xp-row .org { font-size: 22px; font-weight: 700; letter-spacing: -.02em; margin: 8px 0 4px; }
+  .xp-row .where { color: var(--muted); font-size: 14px; }
+  .xp-role { margin-bottom: 22px; }
+  .xp-role:last-child { margin-bottom: 0; }
+  .xp-role h3 { font-size: 18px; margin: 0 0 2px; }
+  .xp-role .dates { font: 12px var(--mono); color: var(--g2); margin-bottom: 10px; }
+  .xp-role ul { margin: 0; padding-left: 18px; color: #d4d4d8; }
+  .xp-role li { margin-bottom: 6px; }
+  .lang { font: 500 13px var(--mono); border: 1px solid var(--line2); border-radius: 6px; padding: 4px 9px; text-decoration: none; color: var(--fg) !important; }
+  @media (max-width: 860px) { .xp-row { grid-template-columns: 1fr; gap: 16px; } }
+  @media (max-width: 860px) {
+    nav ul { display: none; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stats > div:nth-child(2) { border-right: 0; }
+    .stats > div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+    .case { grid-template-columns: 1fr; gap: 20px; }
+    .grid3, .stack, .side { grid-template-columns: 1fr; }
+    .wrap { padding: 0 18px; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gstroke" x1="0" x2="1"><stop offset="0" stop-color="#ff318c"/><stop offset=".55" stop-color="#fc801d"/><stop offset="1" stop-color="#7b61ff"/></linearGradient>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#6b6b76"/></marker>
+  </defs>
+</svg>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#">pablo<b>.</b>mazariegos</a>
+    <ul>
+      <li><a href="#experience">Experiencia</a></li>
+      <li><a href="#work">Trabajo</a></li>
+      <li><a href="#stack">Stack</a></li>
+      <li><a href="../cv-es.pdf" download>CV</a></li>
+      <li><a href="#contact">Contacto</a></li>
+      <li><a class="lang" href="../" hreflang="en">EN</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="status"><i></i>Disponible para roles remotos · Guatemala · GMT-6</span>
+    <h1>Construyo y lidero sistemas que <span class="grad">corren en producción.</span></h1>
+    <p class="lede">
+      <b>Tech Lead e ingeniero full stack</b> con más de 7 años construyendo backends, integraciones y frontends para
+      healthtech y banca en América Latina: Java/Spring Boot, Python/FastAPI, Vue y AWS serverless.
+      Mi diferenciador: <b>sistemas LLM en producción</b> y la <b>plataforma de desarrollo AI-native</b> con la que construye mi equipo.
+    </p>
+    <div class="cta">
+      <a class="btn primary" href="../cv-es.pdf" download>Descargar CV (PDF) ↓</a>
+      <a class="btn" href="mailto:pmazariegospinto@gmail.com">Escríbeme</a>
+      <a class="btn" href="https://linkedin.com/in/pmazariegospinto">LinkedIn</a>
+      <a class="btn" href="https://github.com/PabloMazariegos">GitHub</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap" style="padding:0">
+  <div class="stats">
+    <div><b>7+ años</b><span>en ingeniería de software, 5+ en healthtech</span></div>
+    <div><b>48k+</b><span>validaciones de documentos con LLM en producción</span></div>
+    <div><b>22</b><span>repositorios construidos desde cero</span></div>
+    <div><b>250+</b><span>RFCs, specs, runbooks y postmortems</span></div>
+  </div>
+</div>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head"><span class="label">01 / Experiencia</span><h2>Dónde he trabajado</h2></div>
+    <div class="xp">
+      <div class="xp-row">
+        <div><div class="when">jul 2021 – actualidad</div><div class="org">Empresa healthtech</div><div class="where">Aseguradoras y prestadores de salud · 5 países de América Latina · Remoto</div></div>
+        <div>
+          <div class="xp-role"><h3>Tech Lead, Auditoría y Autorización</h3><div class="dates">ene 2026 – actualidad</div>
+            <ul>
+              <li>Lidero al equipo (desarrolladores, QA, product owner): sprints, capacidad, backlog, releases e incidentes de producción, sin dejar de diseñar y programar.</li>
+              <li>Diseñé el Document Validation Service: clasificación y extracción con LLM más un motor de reglas configurable, 48.000+ validaciones en producción.</li>
+              <li>Diseñé la arquitectura de la Pre-auditoría Médica con IA: Claude y Gemini en paralelo con fallback y seguimiento de costo por token.</li>
+              <li>Creé la plataforma interna de Claude Code que adoptó el equipo: 14 plugins, servidores MCP y un flujo multi-agente desde el ticket hasta el código revisado.</li>
+              <li>Construí el framework E2E del equipo: 167 pruebas en Playwright y TypeScript corriendo en ECS.</li>
+            </ul></div>
+          <div class="xp-role"><h3>Ingeniero de Software Full Stack I–III</h3><div class="dates">jul 2021 – dic 2025</div>
+            <ul>
+              <li>Microservicios en Java y Spring Boot: autorizaciones, reembolsos, expedientes clínicos, catálogos, planes, elegibilidad y liquidaciones.</li>
+              <li>Integraciones REST, SOAP y XML con aseguradoras en Guatemala, República Dominicana, Colombia y México.</li>
+              <li>Pipeline de extracción de documentos con IA (FastAPI en Lambda) sobre OpenAI, Anthropic y Gemini; agentes de elegibilidad médica con LangGraph en ECS Fargate.</li>
+              <li>Frontends en Vue.js para prestadores, autorizaciones y receta electrónica, incluyendo los lanzamientos en Argentina y Brasil.</li>
+            </ul></div>
+        </div>
+      </div>
+      <div class="xp-row">
+        <div><div class="when">ene 2019 – jul 2021</div><div class="org">Banco G&amp;T Continental</div><div class="where">Banca · Guatemala</div></div>
+        <div><div class="xp-role"><h3>Ingeniero de Desarrollo</h3><div class="dates">ene 2019 – jul 2021</div>
+          <ul>
+            <li>Desarrollo backend en C++, SQL Server y MongoDB para banca corporativa.</li>
+            <li>Construí un broker que expone comunicaciones internas como APIs REST.</li>
+          </ul></div></div>
+      </div>
+      <div class="xp-row">
+        <div><div class="when">2015 – actualidad</div><div class="org">Educación</div><div class="where">Universidad Mariano Gálvez de Guatemala</div></div>
+        <div>
+          <div class="xp-role"><h3>Maestría en Seguridad de la Información</h3><div class="dates">En curso</div></div>
+          <div class="xp-role"><h3>Licenciatura en Ingeniería en Sistemas</h3><div class="dates">2015 – 2020</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head"><span class="label">02 / Trabajo</span><h2>Trabajo seleccionado</h2></div>
+
+    <article class="case">
+      <aside>
+        <div class="num">01</div>
+        <h3>Document Validation Service</h3>
+        <div class="role">Healthtech · 2026 · Lo diseñé y construí; tech lead del equipo que lo opera</div>
+        <div class="chips"><span>AWS Lambda</span><span>SQS</span><span>API Gateway</span><span>PostgreSQL</span><span>DynamoDB</span><span>LLMs</span></div>
+      </aside>
+      <div class="body">
+        <h4>Problema</h4>
+        <p>Aseguradoras y hospitales envían formularios de reclamos y documentos de autorización que hay que revisar: tipo de documento,
+          firma, sello, consistencia entre campos. Las reglas cambian según el país, el tipo de documento y el contrato.
+          El servicio reemplazó un flujo de validación legado.</p>
+        <h4>Qué construí</h4>
+        <p>Un servicio serverless orientado a eventos. Un LLM clasifica cada documento y extrae sus campos, luego un motor de
+          reglas configurable por país, tipo de documento y contrato los valida. Para hacer el cambio de forma segura, corrí el
+          sistema legado y el servicio nuevo sobre los mismos casos reales de producción y comparé los resultados caso por caso.</p>
+        <div class="diagram">
+          <svg viewBox="0 0 760 170" role="img" aria-label="Arquitectura del Document Validation Service">
+            <rect x="0" y="55" width="110" height="56" rx="8"/><text x="55" y="80" text-anchor="middle">API Gateway</text><text class="sub" x="55" y="97" text-anchor="middle">ingesta</text>
+            <rect x="150" y="55" width="100" height="56" rx="8"/><text x="200" y="80" text-anchor="middle">SQS</text><text class="sub" x="200" y="97" text-anchor="middle">cola async</text>
+            <rect class="hot" x="290" y="55" width="140" height="56" rx="8"/><text x="360" y="80" text-anchor="middle">Orquestador</text><text class="sub" x="360" y="97" text-anchor="middle">Lambda</text>
+            <rect class="hot" x="480" y="4" width="150" height="56" rx="8"/><text x="555" y="29" text-anchor="middle">LLM</text><text class="sub" x="555" y="46" text-anchor="middle">clasifica + extrae</text>
+            <rect class="hot" x="480" y="106" width="150" height="56" rx="8"/><text x="555" y="131" text-anchor="middle">Motor de reglas</text><text class="sub" x="555" y="148" text-anchor="middle">país · doc · contrato</text>
+            <rect x="660" y="55" width="100" height="56" rx="8"/><text x="710" y="80" text-anchor="middle">Postgres</text><text class="sub" x="710" y="97" text-anchor="middle">+ DynamoDB</text>
+            <path d="M110 83 H148" marker-end="url(#arr)"/><path d="M250 83 H288" marker-end="url(#arr)"/>
+            <path d="M430 76 C455 76 455 32 478 32" marker-end="url(#arr)"/><path d="M430 90 C455 90 455 134 478 134" marker-end="url(#arr)"/>
+            <path d="M555 60 V104" marker-end="url(#arr)"/><path d="M630 134 C645 134 645 90 658 90" marker-end="url(#arr)"/>
+          </svg>
+          <div class="cap">fig. 1 · flujo simplificado de la solicitud</div>
+        </div>
+        <div class="metric">
+          <div><b>~48.000</b><span>solicitudes de validación</span></div>
+          <div><b>~518.000</b><span>evaluaciones de reglas</span></div>
+          <div><b>~2.000</b><span>páginas por día</span></div>
+        </div>
+        <p class="note">En producción desde julio 2026 · clientes en Brasil y Colombia</p>
+      </div>
+    </article>
+
+    <article class="case">
+      <aside>
+        <div class="num">02</div>
+        <h3>Microservicios e integraciones en cuatro países</h3>
+        <div class="role">Healthtech · 2021–2025 · Ingeniero Full Stack I–III</div>
+        <div class="chips"><span>Java 17</span><span>Spring Boot</span><span>Spring Batch</span><span>JPA/Hibernate</span><span>Flyway</span><span>Vue.js</span></div>
+      </aside>
+      <div class="body">
+        <h4>Backend</h4>
+        <p>Desarrollé y mantuve microservicios en Java y Spring Boot en bases de código de producción de larga vida: autorizaciones
+          y reembolsos, expedientes clínicos electrónicos, catálogos médicos, planes, elegibilidad, liquidaciones y reportería,
+          con JPA/Hibernate, migraciones con Flyway, Spring Cloud y autorización basada en authorities de OAuth2.</p>
+        <h4>Integraciones</h4>
+        <p>Construí integraciones REST, SOAP y XML con aseguradoras en Guatemala, República Dominicana, Colombia y México,
+          y un loader en Spring Boot 3 / Spring Batch que importa pólizas de seguro desde archivos en S3, disparado por eventos de SQS.</p>
+        <h4>Frontend</h4>
+        <p>Construí frontends en Vue.js para prestadores, autorizaciones y receta electrónica, incluyendo los lanzamientos del
+          producto en Argentina y Brasil.</p>
+        <div class="metric">
+          <div><b>4</b><span>países integrados</span></div>
+          <div><b>~5.300</b><span>commits en 66 repos</span></div>
+          <div><b>22</b><span>repos construidos desde cero</span></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="case">
+      <aside>
+        <div class="num">03</div>
+        <h3>Pre-auditoría Médica con IA</h3>
+        <div class="role">Healthtech · 2026 · Autor del RFC, tech lead del proyecto</div>
+        <div class="chips"><span>Claude</span><span>Gemini</span><span>Fallback</span><span>Versionado de prompts</span><span>Few-shot</span><span>SSO</span></div>
+      </aside>
+      <div class="body">
+        <h4>Problema</h4>
+        <p>Auditar una factura hospitalaria significa leer el expediente clínico y la factura en paralelo. El objetivo del negocio
+          es bajar una auditoría de 2 a 4 horas a menos de 2 horas.</p>
+        <h4>Qué diseñé</h4>
+        <p>Un sistema que cruza el expediente clínico contra la factura y genera alertas en seis categorías:
+          sub- y sobrefacturación, duplicados, cargos fuera de la estancia, inferencia clínica y guías clínicas.
+          Los resultados se cachean por hash SHA-256, los prompts se versionan en la base de datos, el costo por token se
+          rastrea por solicitud desde el primer día, y el feedback estructurado de los auditores alimenta ejemplos few-shot curados.</p>
+        <div class="diagram">
+          <svg viewBox="0 0 760 150" role="img" aria-label="Arquitectura de la pre-auditoría">
+            <rect x="0" y="46" width="150" height="56" rx="8"/><text x="75" y="71" text-anchor="middle">Expediente clínico</text><text class="sub" x="75" y="88" text-anchor="middle">+ factura hospitalaria</text>
+            <rect x="190" y="46" width="120" height="56" rx="8"/><text x="250" y="71" text-anchor="middle">Caché</text><text class="sub" x="250" y="88" text-anchor="middle">SHA-256</text>
+            <rect class="hot" x="360" y="4" width="130" height="50" rx="8"/><text x="425" y="26" text-anchor="middle">Claude</text><text class="sub" x="425" y="42" text-anchor="middle">paralelo</text>
+            <rect class="hot" x="360" y="96" width="130" height="50" rx="8"/><text x="425" y="118" text-anchor="middle">Gemini</text><text class="sub" x="425" y="134" text-anchor="middle">paralelo</text>
+            <rect x="540" y="46" width="100" height="56" rx="8"/><text x="590" y="71" text-anchor="middle">Combinar</text><text class="sub" x="590" y="88" text-anchor="middle">+ fallback</text>
+            <rect x="670" y="46" width="90" height="56" rx="8"/><text x="715" y="71" text-anchor="middle">Alertas</text><text class="sub" x="715" y="88" text-anchor="middle">6 tipos</text>
+            <path d="M150 74 H188" marker-end="url(#arr)"/><path d="M310 68 C335 68 335 29 358 29" marker-end="url(#arr)"/><path d="M310 80 C335 80 335 121 358 121" marker-end="url(#arr)"/>
+            <path d="M490 29 C515 29 515 68 538 68" marker-end="url(#arr)"/><path d="M490 121 C515 121 515 80 538 80" marker-end="url(#arr)"/><path d="M640 74 H668" marker-end="url(#arr)"/>
+          </svg>
+          <div class="cap">fig. 2 · dos proveedores en paralelo, fallback automático</div>
+        </div>
+        <h4>Una decisión de la que estoy contento</h4>
+        <p>Eliminé una capa de OCR que estaba planeada. Agregaba indirección sin agregar valor, y una cosa más que podía fallar.</p>
+      </div>
+    </article>
+
+    <article class="case">
+      <aside>
+        <div class="num">04</div>
+        <h3>Operar LLMs como infraestructura de producción</h3>
+        <div class="role">Healthtech · 2026 · Líder de incidentes y responsable del seguimiento de costos de LLM</div>
+        <div class="chips"><span>Respuesta a incidentes</span><span>Postmortems</span><span>LLM FinOps</span></div>
+      </aside>
+      <div class="body">
+        <h4>El incidente</h4>
+        <p>Nuestro proveedor principal de LLM dejó de responder desde la VPC de producción. En cuestión de horas moví los procesadores
+          de documentos a otro proveedor con un plan de rollback listo, luego estabilicé y migré de vuelta a un modelo más nuevo. Escribí el
+          postmortem y un reporte comparativo de evidencia de ambos proveedores en producción.</p>
+        <h4>El libro de costos</h4>
+        <p>Construí un libro de uso y costo de LLM por solicitud, con precios que tienen fechas de vigencia, y una herramienta que
+          calcula el costo real de extracción (LLM más Lambda) por procesador y ambiente. Sacó a la luz un error de precios que
+          estaba subestimando lo que realmente pagábamos.</p>
+        <div class="metric">
+          <div><b class="grad">~2,8×</b><span>costo real vs. costo registrado,<br>encontrado por el libro de costos</span></div>
+          <div><b>horas</b><span>para mover producción a otro<br>proveedor, con rollback listo</span></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="case">
+      <aside>
+        <div class="num">05</div>
+        <h3>Una plataforma de desarrollo AI-native</h3>
+        <div class="role">Healthtech · 2026 · Creador y autor principal, adoptada por el equipo de ingeniería</div>
+        <div class="chips"><span>Claude Code</span><span>MCP</span><span>Multi-agente</span><span>Python</span><span>Playwright</span><span>ECS</span></div>
+      </aside>
+      <div class="body">
+        <h4>Qué es</h4>
+        <p>Un marketplace interno de Claude Code. Su plugin central es un flujo spec-driven para todo el ciclo: los
+          requerimientos de producto se vuelven tickets de Jira, luego grooming, un spec técnico, un plan con un grafo de
+          dependencias, implementación, pruebas, revisión de código en paralelo por lenguaje, un paquete de QA y el cierre del ticket.
+          Cerca de 20 subagentes especializados, y cada paso tiene un gate ligado a evidencia.</p>
+        <div class="metric">
+          <div><b>14</b><span>plugins</span></div>
+          <div><b>326</b><span>commits</span></div>
+          <div><b>6+</b><span>colaboradores</span></div>
+          <div><b>167</b><span>pruebas E2E en ECS</span></div>
+        </div>
+        <h4>Guardrails por construcción</h4>
+        <p>Las herramientas hacen imposible la acción peligrosa en lugar de pedirle a la gente que tenga cuidado. El servidor
+          MCP de PostgreSQL usa tokens IAM de corta duración y bloquea escrituras en producción, la herramienta de logs es de
+          solo lectura por diseño, y las herramientas de configuración se niegan a escribir en producción.</p>
+        <h4>Pruebas</h4>
+        <p>También construí la suite end-to-end del equipo en Playwright y TypeScript, sobre tres dominios, corriendo en ECS y
+          publicando reportes automáticamente. Su primera corrida encontró bugs reales en el backend.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="principles">
+  <div class="wrap">
+    <div class="sec-head"><span class="label">03 / Principios</span><h2>Cómo trabajo</h2></div>
+    <div class="grid3">
+      <div><span class="label">01</span><h3>Simple primero</h3><p>Elimino capas antes de agregarlas. Menos partes móviles, estado derivado en vez de estado guardado.</p></div>
+      <div><span class="label">02</span><h3>Guardrails en la herramienta</h3><p>Si una acción es peligrosa en producción, la herramienta no debería permitirla. El proceso es el respaldo, no el plan.</p></div>
+      <div><span class="label">03</span><h3>Los LLM son infraestructura</h3><p>Fallbacks, seguimiento de costos, prompts versionados, respuesta a incidentes y postmortems, como cualquier otra dependencia.</p></div>
+      <div><span class="label">04</span><h3>IA en el proceso</h3><p>No solo en el código: requerimientos, tickets, specs, paquetes de QA y planes de release.</p></div>
+      <div><span class="label">05</span><h3>Liderar sin dejar el código</h3><p>Planeo capacidad, corro sprints y releases, y sigo diseñando y construyendo.</p></div>
+      <div><span class="label">06</span><h3>Ponerlo por escrito</h3><p>RFCs antes de construir, specs antes de programar, postmortems después de los incidentes.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="wrap">
+    <div class="sec-head"><span class="label">04 / Stack</span><h2>Con qué trabajo</h2></div>
+    <div class="stack">
+      <div><h3>Backend</h3><p>Java 17 · Spring Boot · Spring Batch<br>Spring Cloud · JPA/Hibernate<br>Python · FastAPI · SQLAlchemy<br>Event-driven · DDD</p></div>
+      <div><h3>IA Aplicada</h3><p>Claude · Gemini · OpenAI<br>LangGraph · LangChain · Langfuse<br>Extracción estructurada · pgvector<br>Fallback multi-proveedor</p></div>
+      <div><h3>AWS</h3><p>Lambda · SQS · SNS · S3<br>API Gateway · ECS Fargate<br>RDS · DynamoDB · SSM<br>Serverless · SAM · Docker</p></div>
+      <div><h3>Ingeniería AI-native</h3><p>Plugins de Claude Code · subagentes<br>Servidores MCP · hooks<br>Flujos multi-agente</p></div>
+      <div><h3>Frontend</h3><p>Vue 3 · Nuxt · TypeScript<br>PrimeVue · Tailwind · Vitest</p></div>
+      <div><h3>Calidad</h3><p>pytest · Playwright · TDD<br>Pruebas de paridad · Postmortems</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="label">05 / Proyectos personales</span><h2>Fuera del trabajo</h2></div>
+    <div class="side">
+      <a href="https://finanzapp.pblpnt.com"><span class="label">Personal · En vivo ↗</span><h3>FinanzApp</h3><p>Una app de finanzas personales que diseñé, construí y opero. Nuxt 4 y Supabase.</p></a>
+      <div class="card"><span class="label">Freelance · 2025</span><h3>FIT System</h3><p>Frontend lead y arquitecto para un fondo de innovación del Ministerio de Economía de Guatemala. Vue 3, TypeScript, PrimeVue.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <span class="label" style="color:var(--g2)">06 / Contacto</span>
+    <h2>¿Necesitas a alguien que construya y lidere?<br><span class="grad">Hablemos.</span></h2>
+    <div class="cta">
+      <a class="btn primary" href="mailto:pmazariegospinto@gmail.com">pmazariegospinto@gmail.com</a>
+      <a class="btn" href="../cv-es.pdf" download>Descargar CV (PDF) ↓</a>
+    </div>
+    <div class="small"><span>Pablo Mazariegos · Guatemala · GMT-6</span><span>Español (nativo) · Inglés (profesional)</span></div>
+  </div>
+</footer>
+
+</body>
+</html>
