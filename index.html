@@ -125,6 +125,26 @@
   .xp-role ul { margin: 0; padding-left: 18px; color: #d4d4d8; }
   .xp-role li { margin-bottom: 6px; }
   .lang { font: 500 13px var(--mono); border: 1px solid var(--line2); border-radius: 6px; padding: 4px 9px; text-decoration: none; color: var(--fg) !important; }
+
+  .persp { border-bottom: 1px solid var(--line); }
+  .persp .wrap { padding-top: 64px; padding-bottom: 64px; }
+  .persp p { font-size: clamp(20px, 2.4vw, 26px); line-height: 1.45; letter-spacing: -.01em; margin: 14px 0 0; max-width: 46ch; color: #d4d4d8; }
+  .persp p b { color: var(--fg); font-weight: 600; }
+  .learned { margin-top: 22px; padding: 14px 16px; border-left: 2px solid var(--g2); background: var(--bg2); border-radius: 0 10px 10px 0; color: #d4d4d8; }
+  .learned b { font: 500 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--g2); display: block; margin-bottom: 4px; }
+  .flow-m { display: none; font: 12px/1.9 var(--mono); color: var(--muted); background: var(--bg2); border: 1px solid var(--line2); border-radius: 12px; padding: 14px 16px; margin: 20px 0 8px; }
+  .case > *, .case .body { min-width: 0; }
+  @media (max-width: 860px) {
+    nav ul { display: flex !important; gap: 14px; }
+    nav ul li:not(.m) { display: none; }
+    .sec-head { flex-direction: column; align-items: flex-start; gap: 10px; padding: 56px 0 28px; }
+    .sec-head h2 { font-size: 32px; }
+    .diagram { display: none; }
+    .flow-m { display: block; }
+    .metric { gap: 18px 28px; }
+    .metric b { font-size: 24px; }
+    .persp .wrap { padding-top: 44px; padding-bottom: 44px; }
+  }
   @media (max-width: 860px) { .xp-row { grid-template-columns: 1fr; gap: 16px; } }
   @media (max-width: 860px) {
     nav ul { display: none; }
@@ -153,9 +173,9 @@
       <li><a href="#experience">Experience</a></li>
       <li><a href="#work">Work</a></li>
       <li><a href="#stack">Stack</a></li>
-      <li><a href="cv-en.pdf" download>CV</a></li>
+      <li class="m"><a href="cv-en.pdf" download>CV</a></li>
       <li><a href="#contact">Contact</a></li>
-      <li><a class="lang" href="es/" hreflang="es">ES</a></li>
+      <li class="m"><a class="lang" href="es/" hreflang="es">ES</a></li>
     </ul>
   </div>
 </nav>
@@ -186,6 +206,13 @@
     <div><b>250+</b><span>RFCs, specs, runbooks and postmortems</span></div>
   </div>
 </div>
+
+<section class="persp">
+  <div class="wrap">
+    <span class="label" style="color:var(--g2)">Perspective</span>
+    <p>I like problems where software has to work in the real world: <b>messy documents, rules that change by country, providers that go down.</b> My take on AI is simple: a model is just another dependency. It needs fallbacks, cost tracking, tests against reality and someone who owns it in production. <b>That's the kind of engineering I enjoy, and the kind of team I like to lead.</b></p>
+  </div>
+</section>
 
 <section id="experience">
   <div class="wrap">
@@ -250,6 +277,7 @@
         <p>An event-driven serverless service. An LLM classifies each document and extracts its fields, then a rules
           engine configurable per country, document type, and contract validates them. To switch over safely, I ran the
           legacy system and the new service on the same real production cases and compared the results case by case.</p>
+        <p class="flow-m">API Gateway → SQS → Orchestrator (Lambda)<br>→ LLM: classify + extract<br>→ Rules engine: country · document · contract<br>→ PostgreSQL + DynamoDB</p>
         <div class="diagram">
           <svg viewBox="0 0 760 170" role="img" aria-label="Document Validation Service architecture">
             <rect x="0" y="55" width="110" height="56" rx="8"/><text x="55" y="80" text-anchor="middle">API Gateway</text><text class="sub" x="55" y="97" text-anchor="middle">ingestion</text>
@@ -270,6 +298,7 @@
           <div><b>~2,000</b><span>pages per day</span></div>
         </div>
         <p class="note">In production as of July 2026 · clients in Brazil and Colombia</p>
+        <div class="learned"><b>What I learned</b>Validate against the old system before switching. Parity tests on real cases turned a risky migration into a boring one, and boring is what you want in production.</div>
       </div>
     </article>
 
@@ -295,6 +324,7 @@
           <div><b>4</b><span>countries integrated</span></div>
           <div><b>2</b><span>product launches: Argentina and Brazil</span></div>
         </div>
+        <div class="learned"><b>What I learned</b>Integrations are where systems break. Versioned contracts and clear documentation for the teams that consume an API matter as much as the code behind it.</div>
       </div>
     </article>
 
@@ -314,6 +344,7 @@
           under- and over-billing, duplicates, charges outside the stay, clinical inference, and clinical guidelines.
           Results are cached by SHA-256 hash, prompts are versioned in the database, token cost is tracked per request
           from day one, and structured feedback from auditors feeds curated few-shot examples.</p>
+        <p class="flow-m">Clinical record + hospital invoice<br>→ Cache (SHA-256)<br>→ Claude ∥ Gemini, in parallel<br>→ Merge + automatic fallback<br>→ Alerts (6 types)</p>
         <div class="diagram">
           <svg viewBox="0 0 760 150" role="img" aria-label="Pre-audit architecture">
             <rect x="0" y="46" width="150" height="56" rx="8"/><text x="75" y="71" text-anchor="middle">Clinical record</text><text class="sub" x="75" y="88" text-anchor="middle">+ hospital invoice</text>
@@ -352,6 +383,7 @@
           <div><b class="grad">~2.8×</b><span>real cost vs. recorded cost,<br>found by the ledger</span></div>
           <div><b>hours</b><span>to move production to another<br>provider, with rollback ready</span></div>
         </div>
+        <div class="learned"><b>What I learned</b>A model is a dependency like any other: it will fail and it will cost more than you think. Plan for both from day one.</div>
       </div>
     </article>
 
@@ -380,6 +412,7 @@
         <h4>Testing</h4>
         <p>I also built the team's end-to-end suite in Playwright and TypeScript, across three domains, running on ECS and
           publishing reports automatically. Its first run found real backend bugs.</p>
+        <div class="learned"><b>What I learned</b>The best guardrail is a tool that makes the dangerous action impossible. Asking people to be careful is the backup, not the plan.</div>
       </div>
     </article>
   </div>
@@ -423,9 +456,16 @@
   </div>
 </section>
 
+<section id="now">
+  <div class="wrap">
+    <div class="sec-head"><span class="label">06 / Now</span><h2>What I'm focused on</h2></div>
+    <div class="grid3"><div><span class="label">01</span><h3>Security for AI</h3><p>I'm applying my Master's in Information Security to AI systems: guardrails, data protection and safe access for agents to production.</p></div><div><span class="label">02</span><h3>AI-native engineering</h3><p>Specialized agents with clear contracts, and tools that make the safe path the easy one for the whole team.</p></div><div><span class="label">03</span><h3>What I'm looking for</h3><p>A 100% remote role as Tech Lead, AI Engineer or Senior Backend Engineer, where I can lead without leaving the code.</p></div></div>
+  </div>
+</section>
+
 <footer id="contact">
   <div class="wrap">
-    <span class="label" style="color:var(--g2)">06 / Contact</span>
+    <span class="label" style="color:var(--g2)">07 / Contact</span>
     <h2>Need someone who builds and leads?<br><span class="grad">Let's talk.</span></h2>
     <div class="cta">
       <a class="btn primary" href="mailto:pmazariegospinto@gmail.com">pmazariegospinto@gmail.com</a>

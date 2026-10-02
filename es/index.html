@@ -125,6 +125,26 @@
   .xp-role ul { margin: 0; padding-left: 18px; color: #d4d4d8; }
   .xp-role li { margin-bottom: 6px; }
   .lang { font: 500 13px var(--mono); border: 1px solid var(--line2); border-radius: 6px; padding: 4px 9px; text-decoration: none; color: var(--fg) !important; }
+
+  .persp { border-bottom: 1px solid var(--line); }
+  .persp .wrap { padding-top: 64px; padding-bottom: 64px; }
+  .persp p { font-size: clamp(20px, 2.4vw, 26px); line-height: 1.45; letter-spacing: -.01em; margin: 14px 0 0; max-width: 46ch; color: #d4d4d8; }
+  .persp p b { color: var(--fg); font-weight: 600; }
+  .learned { margin-top: 22px; padding: 14px 16px; border-left: 2px solid var(--g2); background: var(--bg2); border-radius: 0 10px 10px 0; color: #d4d4d8; }
+  .learned b { font: 500 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--g2); display: block; margin-bottom: 4px; }
+  .flow-m { display: none; font: 12px/1.9 var(--mono); color: var(--muted); background: var(--bg2); border: 1px solid var(--line2); border-radius: 12px; padding: 14px 16px; margin: 20px 0 8px; }
+  .case > *, .case .body { min-width: 0; }
+  @media (max-width: 860px) {
+    nav ul { display: flex !important; gap: 14px; }
+    nav ul li:not(.m) { display: none; }
+    .sec-head { flex-direction: column; align-items: flex-start; gap: 10px; padding: 56px 0 28px; }
+    .sec-head h2 { font-size: 32px; }
+    .diagram { display: none; }
+    .flow-m { display: block; }
+    .metric { gap: 18px 28px; }
+    .metric b { font-size: 24px; }
+    .persp .wrap { padding-top: 44px; padding-bottom: 44px; }
+  }
   @media (max-width: 860px) { .xp-row { grid-template-columns: 1fr; gap: 16px; } }
   @media (max-width: 860px) {
     nav ul { display: none; }
@@ -153,9 +173,9 @@
       <li><a href="#experience">Experiencia</a></li>
       <li><a href="#work">Trabajo</a></li>
       <li><a href="#stack">Stack</a></li>
-      <li><a href="../cv-es.pdf" download>CV</a></li>
+      <li class="m"><a href="../cv-es.pdf" download>CV</a></li>
       <li><a href="#contact">Contacto</a></li>
-      <li><a class="lang" href="../" hreflang="en">EN</a></li>
+      <li class="m"><a class="lang" href="../" hreflang="en">EN</a></li>
     </ul>
   </div>
 </nav>
@@ -186,6 +206,13 @@
     <div><b>250+</b><span>RFCs, specs, runbooks y postmortems</span></div>
   </div>
 </div>
+
+<section class="persp">
+  <div class="wrap">
+    <span class="label" style="color:var(--g2)">Perspectiva</span>
+    <p>Me gustan los problemas donde el software tiene que funcionar en el mundo real: <b>documentos desordenados, reglas que cambian por país, proveedores que se caen.</b> Mi forma de ver la IA es simple: un modelo es una dependencia más. Necesita fallback, control de costos, pruebas contra la realidad y alguien que se haga cargo en producción. <b>Ese es el tipo de ingeniería que disfruto y el tipo de equipo que me gusta liderar.</b></p>
+  </div>
+</section>
 
 <section id="experience">
   <div class="wrap">
@@ -250,6 +277,7 @@
         <p>Un servicio serverless orientado a eventos. Un LLM clasifica cada documento y extrae sus campos, luego un motor de
           reglas configurable por país, tipo de documento y contrato los valida. Para hacer el cambio de forma segura, corrí el
           sistema legado y el servicio nuevo sobre los mismos casos reales de producción y comparé los resultados caso por caso.</p>
+        <p class="flow-m">API Gateway → SQS → Orquestador (Lambda)<br>→ LLM: clasifica + extrae<br>→ Motor de reglas: país · documento · contrato<br>→ PostgreSQL + DynamoDB</p>
         <div class="diagram">
           <svg viewBox="0 0 760 170" role="img" aria-label="Arquitectura del Document Validation Service">
             <rect x="0" y="55" width="110" height="56" rx="8"/><text x="55" y="80" text-anchor="middle">API Gateway</text><text class="sub" x="55" y="97" text-anchor="middle">ingesta</text>
@@ -270,6 +298,7 @@
           <div><b>~2.000</b><span>páginas por día</span></div>
         </div>
         <p class="note">En producción desde julio 2026 · clientes en Brasil y Colombia</p>
+        <div class="learned"><b>Qué aprendí</b>Validar contra el sistema anterior antes de cambiar. Las pruebas de paridad con casos reales convirtieron una migración riesgosa en una aburrida, y aburrido es lo que quieres en producción.</div>
       </div>
     </article>
 
@@ -295,6 +324,7 @@
           <div><b>4</b><span>países integrados</span></div>
           <div><b>2</b><span>lanzamientos de producto: Argentina y Brasil</span></div>
         </div>
+        <div class="learned"><b>Qué aprendí</b>Las integraciones son donde los sistemas se rompen. Los contratos versionados y una documentación clara para quien consume una API importan tanto como el código detrás.</div>
       </div>
     </article>
 
@@ -314,6 +344,7 @@
           sub- y sobrefacturación, duplicados, cargos fuera de la estancia, inferencia clínica y guías clínicas.
           Los resultados se cachean por hash SHA-256, los prompts se versionan en la base de datos, el costo por token se
           rastrea por solicitud desde el primer día, y el feedback estructurado de los auditores alimenta ejemplos few-shot curados.</p>
+        <p class="flow-m">Expediente clínico + factura hospitalaria<br>→ Caché (SHA-256)<br>→ Claude ∥ Gemini, en paralelo<br>→ Fusión + fallback automático<br>→ Alertas (6 tipos)</p>
         <div class="diagram">
           <svg viewBox="0 0 760 150" role="img" aria-label="Arquitectura de la pre-auditoría">
             <rect x="0" y="46" width="150" height="56" rx="8"/><text x="75" y="71" text-anchor="middle">Expediente clínico</text><text class="sub" x="75" y="88" text-anchor="middle">+ factura hospitalaria</text>
@@ -352,6 +383,7 @@
           <div><b class="grad">~2,8×</b><span>costo real vs. costo registrado,<br>encontrado por el libro de costos</span></div>
           <div><b>horas</b><span>para mover producción a otro<br>proveedor, con rollback listo</span></div>
         </div>
+        <div class="learned"><b>Qué aprendí</b>Un modelo es una dependencia como cualquier otra: va a fallar y va a costar más de lo que crees. Hay que planificar ambas cosas desde el primer día.</div>
       </div>
     </article>
 
@@ -380,6 +412,7 @@
         <h4>Pruebas</h4>
         <p>También construí la suite end-to-end del equipo en Playwright y TypeScript, sobre tres dominios, corriendo en ECS y
           publicando reportes automáticamente. Su primera corrida encontró bugs reales en el backend.</p>
+        <div class="learned"><b>Qué aprendí</b>El mejor guardrail es una herramienta que hace imposible la acción peligrosa. Pedirle a la gente que tenga cuidado es el respaldo, no el plan.</div>
       </div>
     </article>
   </div>
@@ -423,9 +456,16 @@
   </div>
 </section>
 
+<section id="now">
+  <div class="wrap">
+    <div class="sec-head"><span class="label">06 / Ahora</span><h2>En qué estoy ahora</h2></div>
+    <div class="grid3"><div><span class="label">01</span><h3>Seguridad para IA</h3><p>Estoy aplicando mi Maestría en Seguridad de la Información a sistemas de IA: guardrails, protección de datos y acceso seguro de los agentes a producción.</p></div><div><span class="label">02</span><h3>Ingeniería AI-native</h3><p>Agentes especializados con contratos claros, y herramientas que hacen que el camino seguro sea el fácil para todo el equipo.</p></div><div><span class="label">03</span><h3>Qué busco</h3><p>Un rol 100% remoto como Tech Lead, AI Engineer o Backend Senior, donde pueda liderar sin dejar el código.</p></div></div>
+  </div>
+</section>
+
 <footer id="contact">
   <div class="wrap">
-    <span class="label" style="color:var(--g2)">06 / Contacto</span>
+    <span class="label" style="color:var(--g2)">07 / Contacto</span>
     <h2>¿Necesitas a alguien que construya y lidere?<br><span class="grad">Hablemos.</span></h2>
     <div class="cta">
       <a class="btn primary" href="mailto:pmazariegospinto@gmail.com">pmazariegospinto@gmail.com</a>
