@@ -134,13 +134,22 @@
   .learned b { font: 500 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--g2); display: block; margin-bottom: 4px; }
   .flow-m { display: none; font: 12px/1.9 var(--mono); color: var(--muted); background: var(--bg2); border: 1px solid var(--line2); border-radius: 12px; padding: 14px 16px; margin: 20px 0 8px; }
   .case > *, .case .body { min-width: 0; }
+
+  .vflow { display: none; flex-direction: column; align-items: center; gap: 0; margin: 20px 0 8px; padding: 18px 12px; border: 1px solid var(--line2); border-radius: 12px; background: var(--bg2); }
+  .vflow .box { width: 100%; max-width: 260px; text-align: center; padding: 10px 12px; border-radius: 8px; background: #141418; border: 1px solid var(--line2); font: 12px/1.3 var(--mono); color: var(--fg); }
+  .vflow .box span { display: block; color: var(--dim); font-size: 10.5px; margin-top: 3px; }
+  .vflow .hot { border: 1.5px solid transparent; background: linear-gradient(#141418, #141418) padding-box, linear-gradient(90deg, var(--g1), var(--g2), var(--g3)) border-box; }
+  .vflow .arrow { color: var(--dim); font: 14px/1 var(--mono); padding: 6px 0; }
+  .vflow .row { display: flex; gap: 10px; width: 100%; max-width: 300px; }
+  .vflow .row .box { flex: 1; }
+  .vflow .cap { font: 11px var(--mono); color: var(--dim); margin-top: 12px; align-self: flex-start; }
   @media (max-width: 860px) {
     nav ul { display: flex !important; gap: 14px; }
     nav ul li:not(.m) { display: none; }
     .sec-head { flex-direction: column; align-items: flex-start; gap: 10px; padding: 56px 0 28px; }
     .sec-head h2 { font-size: 32px; }
     .diagram { display: none; }
-    .flow-m { display: block; }
+    .vflow { display: flex; }
     .metric { gap: 18px 28px; }
     .metric b { font-size: 24px; }
     .persp .wrap { padding-top: 44px; padding-bottom: 44px; }
@@ -277,7 +286,7 @@
         <p>An event-driven serverless service. An LLM classifies each document and extracts its fields, then a rules
           engine configurable per country, document type, and contract validates them. To switch over safely, I ran the
           legacy system and the new service on the same real production cases and compared the results case by case.</p>
-        <p class="flow-m">API Gateway → SQS → Orchestrator (Lambda)<br>→ LLM: classify + extract<br>→ Rules engine: country · document · contract<br>→ PostgreSQL + DynamoDB</p>
+        <div class="vflow"><div class="box">API Gateway<span>ingestion</span></div><div class="arrow">↓</div><div class="box">SQS<span>async queue</span></div><div class="arrow">↓</div><div class="box hot">Orchestrator<span>Lambda</span></div><div class="arrow">↓</div><div class="row"><div class="box hot">LLM<span>classify + extract</span></div><div class="box hot">Rules engine<span>country · doc · contract</span></div></div><div class="arrow">↓</div><div class="box">Postgres<span>+ DynamoDB</span></div><div class="cap">fig. 1 · simplified request path</div></div>
         <div class="diagram">
           <svg viewBox="0 0 760 170" role="img" aria-label="Document Validation Service architecture">
             <rect x="0" y="55" width="110" height="56" rx="8"/><text x="55" y="80" text-anchor="middle">API Gateway</text><text class="sub" x="55" y="97" text-anchor="middle">ingestion</text>
@@ -344,7 +353,7 @@
           under- and over-billing, duplicates, charges outside the stay, clinical inference, and clinical guidelines.
           Results are cached by SHA-256 hash, prompts are versioned in the database, token cost is tracked per request
           from day one, and structured feedback from auditors feeds curated few-shot examples.</p>
-        <p class="flow-m">Clinical record + hospital invoice<br>→ Cache (SHA-256)<br>→ Claude ∥ Gemini, in parallel<br>→ Merge + automatic fallback<br>→ Alerts (6 types)</p>
+        <div class="vflow"><div class="box">Clinical record<span>+ hospital invoice</span></div><div class="arrow">↓</div><div class="box">Cache<span>SHA-256</span></div><div class="arrow">↓</div><div class="row"><div class="box hot">Claude<span>parallel</span></div><div class="box hot">Gemini<span>parallel</span></div></div><div class="arrow">↓</div><div class="box">Merge<span>+ fallback</span></div><div class="arrow">↓</div><div class="box">Alerts<span>6 types</span></div><div class="cap">fig. 2 · two providers in parallel, automatic fallback</div></div>
         <div class="diagram">
           <svg viewBox="0 0 760 150" role="img" aria-label="Pre-audit architecture">
             <rect x="0" y="46" width="150" height="56" rx="8"/><text x="75" y="71" text-anchor="middle">Clinical record</text><text class="sub" x="75" y="88" text-anchor="middle">+ hospital invoice</text>

@@ -134,13 +134,22 @@
   .learned b { font: 500 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--g2); display: block; margin-bottom: 4px; }
   .flow-m { display: none; font: 12px/1.9 var(--mono); color: var(--muted); background: var(--bg2); border: 1px solid var(--line2); border-radius: 12px; padding: 14px 16px; margin: 20px 0 8px; }
   .case > *, .case .body { min-width: 0; }
+
+  .vflow { display: none; flex-direction: column; align-items: center; gap: 0; margin: 20px 0 8px; padding: 18px 12px; border: 1px solid var(--line2); border-radius: 12px; background: var(--bg2); }
+  .vflow .box { width: 100%; max-width: 260px; text-align: center; padding: 10px 12px; border-radius: 8px; background: #141418; border: 1px solid var(--line2); font: 12px/1.3 var(--mono); color: var(--fg); }
+  .vflow .box span { display: block; color: var(--dim); font-size: 10.5px; margin-top: 3px; }
+  .vflow .hot { border: 1.5px solid transparent; background: linear-gradient(#141418, #141418) padding-box, linear-gradient(90deg, var(--g1), var(--g2), var(--g3)) border-box; }
+  .vflow .arrow { color: var(--dim); font: 14px/1 var(--mono); padding: 6px 0; }
+  .vflow .row { display: flex; gap: 10px; width: 100%; max-width: 300px; }
+  .vflow .row .box { flex: 1; }
+  .vflow .cap { font: 11px var(--mono); color: var(--dim); margin-top: 12px; align-self: flex-start; }
   @media (max-width: 860px) {
     nav ul { display: flex !important; gap: 14px; }
     nav ul li:not(.m) { display: none; }
     .sec-head { flex-direction: column; align-items: flex-start; gap: 10px; padding: 56px 0 28px; }
     .sec-head h2 { font-size: 32px; }
     .diagram { display: none; }
-    .flow-m { display: block; }
+    .vflow { display: flex; }
     .metric { gap: 18px 28px; }
     .metric b { font-size: 24px; }
     .persp .wrap { padding-top: 44px; padding-bottom: 44px; }
@@ -277,7 +286,7 @@
         <p>Un servicio serverless orientado a eventos. Un LLM clasifica cada documento y extrae sus campos, luego un motor de
           reglas configurable por país, tipo de documento y contrato los valida. Para hacer el cambio de forma segura, corrí el
           sistema legado y el servicio nuevo sobre los mismos casos reales de producción y comparé los resultados caso por caso.</p>
-        <p class="flow-m">API Gateway → SQS → Orquestador (Lambda)<br>→ LLM: clasifica + extrae<br>→ Motor de reglas: país · documento · contrato<br>→ PostgreSQL + DynamoDB</p>
+        <div class="vflow"><div class="box">API Gateway<span>ingesta</span></div><div class="arrow">↓</div><div class="box">SQS<span>cola asíncrona</span></div><div class="arrow">↓</div><div class="box hot">Orquestador<span>Lambda</span></div><div class="arrow">↓</div><div class="row"><div class="box hot">LLM<span>clasifica + extrae</span></div><div class="box hot">Motor de reglas<span>país · doc · contrato</span></div></div><div class="arrow">↓</div><div class="box">Postgres<span>+ DynamoDB</span></div><div class="cap">fig. 1 · flujo simplificado de la solicitud</div></div>
         <div class="diagram">
           <svg viewBox="0 0 760 170" role="img" aria-label="Arquitectura del Document Validation Service">
             <rect x="0" y="55" width="110" height="56" rx="8"/><text x="55" y="80" text-anchor="middle">API Gateway</text><text class="sub" x="55" y="97" text-anchor="middle">ingesta</text>
@@ -344,7 +353,7 @@
           sub- y sobrefacturación, duplicados, cargos fuera de la estancia, inferencia clínica y guías clínicas.
           Los resultados se cachean por hash SHA-256, los prompts se versionan en la base de datos, el costo por token se
           rastrea por solicitud desde el primer día, y el feedback estructurado de los auditores alimenta ejemplos few-shot curados.</p>
-        <p class="flow-m">Expediente clínico + factura hospitalaria<br>→ Caché (SHA-256)<br>→ Claude ∥ Gemini, en paralelo<br>→ Fusión + fallback automático<br>→ Alertas (6 tipos)</p>
+        <div class="vflow"><div class="box">Expediente clínico<span>+ factura hospitalaria</span></div><div class="arrow">↓</div><div class="box">Caché<span>SHA-256</span></div><div class="arrow">↓</div><div class="row"><div class="box hot">Claude<span>en paralelo</span></div><div class="box hot">Gemini<span>en paralelo</span></div></div><div class="arrow">↓</div><div class="box">Fusión<span>+ fallback</span></div><div class="arrow">↓</div><div class="box">Alertas<span>6 tipos</span></div><div class="cap">fig. 2 · dos proveedores en paralelo, fallback automático</div></div>
         <div class="diagram">
           <svg viewBox="0 0 760 150" role="img" aria-label="Arquitectura de la pre-auditoría">
             <rect x="0" y="46" width="150" height="56" rx="8"/><text x="75" y="71" text-anchor="middle">Expediente clínico</text><text class="sub" x="75" y="88" text-anchor="middle">+ factura hospitalaria</text>
