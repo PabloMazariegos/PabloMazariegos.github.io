@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pablo Mazariegos · Tech Lead, Backend &amp; Full Stack</title>
-<meta name="description" content="Tech Lead and full stack engineer: backend systems, integrations and LLM systems in production. Guatemala, remote.">
+<title>Pablo Mazariegos · AI Engineer · Tech Lead</title>
+<meta name="description" content="AI Engineer and Tech Lead: LLM systems in production, evals, cost control and AI agents. Guatemala, remote.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -194,7 +194,7 @@
     <span class="status"><i></i>Open to remote roles · Guatemala · GMT-6</span>
     <h1>I build and lead systems that <span class="grad">run in production.</span></h1>
     <p class="lede">
-      <b>Tech Lead and full stack engineer</b> with 7+ years building backends, integrations and frontends for
+      <b>AI Engineer and Tech Lead</b> with 7+ years building backends, integrations and frontends for
       healthtech and banking across Latin America: Java/Spring Boot, Python/FastAPI, Vue and serverless AWS.
       My edge: <b>LLM systems in production</b> and the <b>AI-native development platform</b> my team ships with.
     </p>
@@ -210,7 +210,7 @@
 <div class="wrap" style="padding:0">
   <div class="stats">
     <div><b>7+ yrs</b><span>software engineering, 5+ in healthtech</span></div>
-    <div><b>48k+</b><span>LLM document validations in production</span></div>
+    <div><b>−92%</b><span>latency on our slowest LLM documents</span></div>
     <div><b>5</b><span>countries served, from Guatemala to Brazil</span></div>
     <div><b>250+</b><span>RFCs, specs, runbooks and postmortems</span></div>
   </div>
@@ -232,10 +232,12 @@
         <div>
           <div class="xp-role"><h3>Tech Lead, Audit and Authorization</h3><div class="dates">Jan 2026 – Present</div>
             <ul>
-              <li>Lead the team (developers, QA, product owner): sprints, capacity, backlog, releases and production incidents, while still designing and coding.</li>
-              <li>Designed the Document Validation Service: LLM classification and extraction plus a configurable rules engine, 48,000+ validations in production.</li>
+              <li>Lead a 4-engineer AI team: technical guidelines, technology choices and architecture, plus releases and production incidents, while still designing and coding.</li>
+              <li>Designed the Document Validation Service: LLM classification and extraction plus a configurable rules engine, at a scale of hundreds of thousands of documents.</li>
+              <li>Evals: versioned prompts and a regression suite that measures every change; classification accuracy up from 80% to 90.5%.</li>
               <li>Architected Medical Pre-Audit with AI: Claude and Gemini in parallel with fallback and per-token cost tracking.</li>
-              <li>Created the internal Claude Code platform the team adopted: 14 plugins, MCP servers and a multi-agent workflow from ticket to reviewed code.</li>
+              <li>Lead author of 10 of the 23 plugins in the internal Claude Code marketplace: MCP servers and a multi-agent workflow from ticket to reviewed code.</li>
+              <li>Security: SSO with PKCE, OAuth2 for integrators and per-client data isolation.</li>
               <li>Built the team's E2E framework: 167 Playwright and TypeScript tests running on ECS.</li>
             </ul></div>
           <div class="xp-role"><h3>Full Stack Software Engineer I–III</h3><div class="dates">Jul 2021 – Dec 2025</div>
@@ -286,6 +288,10 @@
         <p>An event-driven serverless service. An LLM classifies each document and extracts its fields, then a rules
           engine configurable per country, document type, and contract validates them. To switch over safely, I ran the
           legacy system and the new service on the same real production cases and compared the results case by case.</p>
+        <h4>How I keep it honest</h4>
+        <p>Prompts are versioned, and a regression suite of about 900 real documents checks the prompt version before it
+          runs. Every candidate is compared against the current version, measuring run-to-run noise before calling it
+          a win. Raising concurrency from 20 to 200 cut latency on the slowest documents from 716 s to 59 s.</p>
         <div class="vflow"><div class="box">API Gateway<span>ingestion</span></div><div class="arrow">↓</div><div class="box">SQS<span>async queue</span></div><div class="arrow">↓</div><div class="box hot">Orchestrator<span>Lambda</span></div><div class="arrow">↓</div><div class="row"><div class="box hot">LLM<span>classify + extract</span></div><div class="box hot">Rules engine<span>country · doc · contract</span></div></div><div class="arrow">↓</div><div class="box">Postgres<span>+ DynamoDB</span></div><div class="cap">fig. 1 · simplified request path</div></div>
         <div class="diagram">
           <svg viewBox="0 0 760 170" role="img" aria-label="Document Validation Service architecture">
@@ -302,11 +308,11 @@
           <div class="cap">fig. 1 · simplified request path</div>
         </div>
         <div class="metric">
-          <div><b>~48,000</b><span>validation requests</span></div>
-          <div><b>~518,000</b><span>rule evaluations</span></div>
-          <div><b>~2,000</b><span>pages per day</span></div>
+          <div><b>80 → 90.5%</b><span>classification accuracy on 824 real documents</span></div>
+          <div><b>−92%</b><span>latency on the slowest documents</span></div>
+          <div><b>100s of K</b><span>documents processed in 2026</span></div>
         </div>
-        <p class="note">In production as of July 2026 · clients in Brazil and Colombia</p>
+        <p class="note">In production since April 2026 · clients in Brazil and Colombia</p>
         <div class="learned"><b>What I learned</b>Validate against the old system before switching. Parity tests on real cases turned a risky migration into a boring one, and boring is what you want in production.</div>
       </div>
     </article>
@@ -400,7 +406,7 @@
       <aside>
         <div class="num">05</div>
         <h3>An AI-native development platform</h3>
-        <div class="role">Healthtech · 2026 · Creator and main author, adopted by the engineering team</div>
+        <div class="role">Healthtech · 2026 · Lead author, adopted by the engineering team</div>
         <div class="chips"><span>Claude Code</span><span>MCP</span><span>Multi-agent</span><span>Python</span><span>Playwright</span><span>ECS</span></div>
       </aside>
       <div class="body">
@@ -410,8 +416,8 @@
           implementation, tests, parallel code review per language, a QA package, and closing the ticket.
           About 20 specialized subagents, and every step has a gate tied to evidence.</p>
         <div class="metric">
-          <div><b>14</b><span>plugins</span></div>
-          <div><b>6+</b><span>contributors</span></div>
+          <div><b>23</b><span>plugins in the marketplace</span></div>
+          <div><b>10</b><span>authored by me</span></div>
           <div><b>167</b><span>E2E tests on ECS</span></div>
         </div>
         <h4>Guardrails by construction</h4>
